@@ -1,0 +1,15 @@
+{% extends 'board/base_t.html' %}
+{% load static %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'board/css/index.css' %}">
+{% endblock %}
+{% block content %}
+    <h1>Welcome to Social</h1>
+    <br><a href="{% url 'board:post_list' %}">click to posts </a>
+    <br><a href="{% url 'board:event_list' %}">click to event </a>
+    <br><a href="{% url 'testapp:html_css' %}">html_css</a>
+    <br><a href="{% url 'testapp:test_css' %}">test_css</a>
+{% endblock %}
+{% block footer %}{% endblock %}

@@ -1,0 +1,58 @@
+body {
+  /*background-color: powderblue;*/
+  /*background-color: rgb(196,224,215);*/
+}
+
+h1 {
+  color: blue;
+  /*background-color:rgba(240, 129, 11, 0.4);*/
+  background-color:#ff0000;
+}
+
+p {
+  color: black;
+}
+
+
+h2 {
+    border-width: 5px;
+    border-style: solid;
+    border-color: red;
+}
+
+#myHeader {
+    background-color: PaleGreen;
+    color: black;
+    height: 70px;
+    text-align: center;
+  }
+
+p.one {
+  border-style: solid;
+  border-width: 5px;
+}
+
+p.two {
+  border-style: solid;
+  border-width: medium;
+}
+
+p.three {
+  border-style: dotted;
+  border-width: 2px;
+}
+
+p.four {
+  border-style: dotted;
+  border-width: thick;
+}
+
+p.five {
+  border-style: double;
+  border-width: 15px;
+}
+
+p.six {
+  border-style: double;
+  border-width: thick;
+}

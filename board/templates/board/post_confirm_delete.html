@@ -1,0 +1,19 @@
+{% extends 'board/base_t.html' %}
+{% load static %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'board/css/index.css' %}">
+{% endblock %}
+{% block content %}
+    {% if user.id == post.author_id %}
+        <form method="post">{% csrf_token %}
+            <p>Are you sure you want to delete "{{ object }}"?</p>
+            {{ form }}
+            <input type="submit" value="Confirm">
+        </form>
+    {% else %}
+        you do not have access rights
+    {% endif %}
+{% endblock %}
+
