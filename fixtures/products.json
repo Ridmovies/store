@@ -1,0 +1,28 @@
+[
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "name": "111",
+      "description": "111",
+      "price": "111.00",
+      "quantity": 1110,
+      "image": "products_images/1.jpg",
+      "stripe_product_price_id": "111",
+      "category": 1
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+      "name": "222",
+      "description": "222",
+      "price": "222.00",
+      "quantity": 222,
+      "image": "products_images/2.jpg",
+      "stripe_product_price_id": "222",
+      "category": 2
+    }
+  }
+]

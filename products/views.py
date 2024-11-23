@@ -10,5 +10,4 @@ class IndexView(TemplateView):
 
 class ProductsView(ListView):
     model = Product
-    # queryset = Product.objects.all()
     template_name = 'products/products.html'
