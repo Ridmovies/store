@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
@@ -22,8 +23,13 @@ class UserLoginView(LoginView):
 class UserRegisterView(CreateView):
     form_class = UserRegisterForm
     template_name = 'users/registration.html'
-    success_url = reverse_lazy('products:index')
-    success_message = 'Вы успешно зарегистрировались. Можете войти на сайт!'
+    success_url = reverse_lazy('users:login')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        # Отправляем сообщение об успешном завершении регистрации
+        messages.success(self.request, 'Вы успешно зарегистрировались. Можете войти на сайт!')
+        return response
 
 
 class UserProfileView(UpdateView):
