@@ -1,10 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth import logout
-from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import render, redirect
+from django.contrib.auth.views import LoginView
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, TemplateView
+from django.views.generic import CreateView, UpdateView, ListView
 
+from products.models import Basket
+from products.services import get_total_sum
 from users.forms import UserRegisterForm, UserProfileForm, UserLoginForm
 from users.models import User
 
@@ -37,4 +39,13 @@ class UserProfileView(UpdateView):
     queryset = User.objects.all()
     template_name = 'users/profile.html'
     success_url = reverse_lazy('products:index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        baskets = Basket.objects.filter(user=self.request.user)
+        context['baskets'] = baskets
+        context['total_sum'] = get_total_sum(baskets)
+        return context
+
+
 

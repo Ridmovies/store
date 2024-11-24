@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 
 class Product(models.Model):
     name = models.CharField(max_length=256)
@@ -20,3 +22,18 @@ class ProductCategory(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Basket(models.Model):
+    user = models.ForeignKey(to=User, related_name='basket', on_delete=models.CASCADE)
+    product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def sum(self):
+        return self.product.price * self.quantity
+
+    def __str__(self):
+        return f"{self.user.username} - {self.product.name} - {self.quantity}"
+
+
