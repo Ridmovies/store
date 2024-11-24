@@ -1,8 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView, ListView
 
 from products.models import Basket
@@ -34,6 +36,7 @@ class UserRegisterView(CreateView):
         return response
 
 
+@method_decorator(login_required, name='dispatch')
 class UserProfileView(UpdateView):
     form_class = UserProfileForm
     queryset = User.objects.all()
