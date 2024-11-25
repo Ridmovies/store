@@ -26,6 +26,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    'oauth2_provider',
+
     "users.apps.UsersConfig",
     "products.apps.ProductsConfig",
     "orders.apps.OrdersConfig",
@@ -137,4 +140,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "users.User"
 LOGIN_REDIRECT_URL = "/"
-LOGIN_URL = "/users/login/"
+
+#  OAuth settings
+# LOGIN_URL = "/users/login/"
+LOGIN_URL = '/admin/login/'
