@@ -8,7 +8,7 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=8, decimal_places=2)
     quantity = models.PositiveIntegerField(default=0)
-    image = models.ImageField(upload_to='products_images', null=True, blank=True)
+    image = models.ImageField(upload_to="products_images", null=True, blank=True)
     stripe_product_price_id = models.CharField(max_length=128, null=True, blank=True)
     category = models.ForeignKey(to="ProductCategory", on_delete=models.CASCADE)
 
@@ -28,7 +28,7 @@ class ProductCategory(models.Model):
 
 
 class Basket(models.Model):
-    user = models.ForeignKey(to=User, related_name='basket', on_delete=models.CASCADE)
+    user = models.ForeignKey(to=User, related_name="basket", on_delete=models.CASCADE)
     product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -38,5 +38,3 @@ class Basket(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.product.name} - {self.quantity}"
-
-

@@ -6,12 +6,9 @@ from users.models import User
 
 class BasketAdmin(admin.TabularInline):
     model = Basket
-    fields = ('product', 'quantity')
+    fields = ("product", "quantity")
 
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     inlines = [BasketAdmin]
-
-
-

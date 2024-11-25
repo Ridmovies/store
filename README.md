@@ -31,3 +31,20 @@ python manage.py loaddata product_app.Product >fixtures/products-fixtures.json -
 ```bash
 python manage.py loaddata fixtures/all_data.json
 ```
+
+## Линтеры и форматеры:
+```bash
+black --check --diff .\product_app\views.py
+```
+
+```bash
+isort --check-only --diff --profile black .\product_app\views.py
+```
+
+```bash
+mypy --incremental ./product_app/views.py 
+```
+
+```bash
+flake8 . 
+```
