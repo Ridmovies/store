@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, ListView
 
-from products.models import Product, Basket
+from products.models import Product, Basket, ProductCategory
 
 
 class IndexView(TemplateView):
@@ -14,6 +14,25 @@ class IndexView(TemplateView):
 class ProductsView(ListView):
     model = Product
     template_name = 'products/products.html'
+    paginate_by = 2
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = ProductCategory.objects.all()
+        return context
+
+    def get_queryset(self):
+        # Получаем category_id из URL
+        category_id = self.kwargs.get('category_id')
+
+        if category_id is not None:
+            # Фильтруем продукты по указанной категории
+            queryset = Product.objects.filter(category__id=category_id)
+        else:
+            # Если категория не указана, возвращаем все продукты
+            queryset = super().get_queryset()
+
+        return queryset
 
 
 @method_decorator(login_required, name='dispatch')
