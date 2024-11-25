@@ -4,11 +4,14 @@ from products.models import Basket
 from users.models import User
 
 
+class BasketAdmin(admin.TabularInline):
+    model = Basket
+    fields = ('product', 'quantity')
+
+
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    pass
+    inlines = [BasketAdmin]
 
 
-@admin.register(Basket)
-class BasketAdmin(admin.ModelAdmin):
-    pass
+

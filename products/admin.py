@@ -5,7 +5,10 @@ from products.models import Product, ProductCategory
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'description', 'price', 'category', 'quantity')
+    fields = ('name', 'description', 'category', ('price', 'quantity'))
+    readonly_fields = ('description',)
+    ordering = ('-name',)
 
 
 @admin.register(ProductCategory)
