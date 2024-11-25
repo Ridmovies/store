@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -24,16 +25,17 @@ class UserLoginView(LoginView):
     success_url = reverse_lazy('products:index')
 
 
-class UserRegisterView(CreateView):
+class UserRegisterView(SuccessMessageMixin, CreateView):
     form_class = UserRegisterForm
     template_name = 'users/registration.html'
     success_url = reverse_lazy('users:login')
+    success_message = "%(username)s was created successfully"
 
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        # Отправляем сообщение об успешном завершении регистрации
-        messages.success(self.request, 'Вы успешно зарегистрировались. Можете войти на сайт!')
-        return response
+    # def form_valid(self, form):
+    #     response = super().form_valid(form)
+    #     # Отправляем сообщение об успешном завершении регистрации
+    #     messages.success(self.request, 'Вы успешно зарегистрировались. Можете войти на сайт!')
+    #     return response
 
 
 @method_decorator(login_required, name='dispatch')
@@ -45,10 +47,8 @@ class UserProfileView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        baskets = Basket.objects.filter(user=self.request.user)
+        baskets = Basket.objects.filter(user=self.object)
+        context['title'] = "Profile"
         context['baskets'] = baskets
         context['total_sum'] = get_total_sum(baskets)
         return context
-
-
-

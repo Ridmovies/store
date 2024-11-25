@@ -2,13 +2,15 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, CreateView
 
+from common.mixins import TitleMixin
 from products.models import Product, Basket, ProductCategory
 
 
-class IndexView(TemplateView):
+class IndexView(TitleMixin, TemplateView):
     template_name = 'products/index.html'
+    title = "Store"
 
 
 class ProductsView(ListView):
@@ -19,20 +21,19 @@ class ProductsView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = ProductCategory.objects.all()
+        context["title"] = "Products"
         return context
 
     def get_queryset(self):
         # Получаем category_id из URL
         category_id = self.kwargs.get('category_id')
-
         if category_id is not None:
             # Фильтруем продукты по указанной категории
             queryset = Product.objects.filter(category__id=category_id)
         else:
             # Если категория не указана, возвращаем все продукты
             queryset = super().get_queryset()
-
-        return queryset
+        return queryset.order_by('id')
 
 
 @method_decorator(login_required, name='dispatch')
