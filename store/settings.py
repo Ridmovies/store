@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -65,10 +66,23 @@ WSGI_APPLICATION = "store.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
+PG_SERVICE_FILE_PATH = os.path.join(BASE_DIR, '.pg_service.conf')
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        'NAME': 'store',  # Название базы данных
+        'USER': 'postgres',  # Имя пользователя
+        'PASSWORD': 'root',  # Пароль
+        'HOST': 'localhost',  # Адрес сервера БД (обычно localhost)
+        'PORT': '5432',  # Порт, на котором работает PostgreSQL (по умолчанию 5432)
     }
 }
 

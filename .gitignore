@@ -29,3 +29,7 @@ nosetests.xml
 coverage.xml
 *.cover
 .hypothesis/
+
+
+.pg_service.conf
+.my_pgpass

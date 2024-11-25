@@ -29,7 +29,7 @@ python manage.py loaddata product_app.Product >fixtures/products-fixtures.json -
 ### Импорт всех данных:
 
 ```bash
-python manage.py loaddata fixtures/all_data.json
+python manage.py loaddata fixtures\all_data.json
 ```
 
 ## Линтеры и форматеры:
