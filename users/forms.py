@@ -74,6 +74,18 @@ class UserRegisterForm(UserCreationForm):
         model = User
         fields = ("username", "email", "password1", "password2")
 
+    # def save(self, commit=True):
+    #     user = super().save(commit=True)
+    #
+    #     if settings.CELERY_SWITCH is True:
+    #         send_email_verification.delay(user.id)
+    #     else:
+    #         expiration = now() + timedelta(hours=48)
+    #         record = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
+    #         record.send_verification_email()
+    #
+    #     return user
+
 
 class UserProfileForm(UserChangeForm):
     first_name = forms.CharField(

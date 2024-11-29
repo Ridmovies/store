@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from products.models import Basket
-from users.models import User
+from users.models import User, EmailVerification
 
 
 class BasketAdmin(admin.TabularInline):
@@ -12,3 +12,8 @@ class BasketAdmin(admin.TabularInline):
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     inlines = [BasketAdmin]
+
+
+@admin.register(EmailVerification)
+class EmailVerificationAdmin(admin.ModelAdmin):
+    pass

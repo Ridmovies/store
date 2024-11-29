@@ -144,3 +144,6 @@ LOGIN_REDIRECT_URL = "/"
 #  OAuth settings
 # LOGIN_URL = "/users/login/"
 LOGIN_URL = '/admin/login/'
+
+# Email settings
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
