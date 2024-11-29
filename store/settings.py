@@ -1,5 +1,9 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Загружаем переменные окружения из файла .env
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,12 +13,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-5jumt^p09h)4y+nc!9iwx%)csr4&!7^lq*e*gov)_46&m+@if!"
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+DOMAIN_NAME = os.environ.get("DOMAIN_NAME")
 
 
 # Application definition
@@ -81,11 +86,11 @@ PG_SERVICE_FILE_PATH = os.path.join(BASE_DIR, '.pg_service.conf')
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        'NAME': 'store',  # Название базы данных
-        'USER': 'postgres',  # Имя пользователя
-        'PASSWORD': 'root',  # Пароль
-        'HOST': 'localhost',  # Адрес сервера БД (обычно localhost)
-        'PORT': '5432',  # Порт, на котором работает PostgreSQL (по умолчанию 5432)
+        'NAME': os.environ.get("DATABASES_NAME"),
+        'USER': os.environ.get("DATABASES_USER"),
+        'PASSWORD': os.environ.get("DATABASES_PASSWORD"),
+        'HOST': os.environ.get("DATABASES_HOST"),
+        'PORT': os.environ.get("DATABASES_PORT"),
     }
 }
 
@@ -146,4 +151,9 @@ LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = '/admin/login/'
 
 # Email settings
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL")

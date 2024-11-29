@@ -5,11 +5,12 @@
 - Django
 - Django ORM
 - Django templates
-- Bootstrap (локально)
+- Bootstrap 
 
 
 ## Особенности проекта:
 - Модификация стандартной модели User
+- Подтверждение электронной почты
 
 
 # Develop
