@@ -30,13 +30,13 @@ python manage.py dumpdata products.ProductCategory > fixtures/product-category-f
 ### Импорт всех данных:
 
 ```bash
-python manage.py loaddata fixtures\all_data.json
+python manage.py loaddata fixtures/all_data.json
 ```
 
 ## Перенос данных из PostgreSQL
 ### Экспорт и импорт дампа
 Используйте утилиту pg_dump для создания дампа базы данных:
-```bash
+```
 pg_dump -U username -h hostname -p port dbname > backup.sql
 ```
 
@@ -45,9 +45,10 @@ pg_dump -U username -h hostname -p port dbname > backup.sql
 & "C:\Program Files\PostgreSQL\15\bin\pg_dump.exe" '-U' 'postgres' '-h' 'localhost' '-p' '5432' 'store' > backup.sql
 ```
 
-
-
-
+### Импортируйте данные из созданного дампа
+```
+psql -U username -d new_dbname -f backup.sql
+```
 
 
 
