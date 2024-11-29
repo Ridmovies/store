@@ -14,6 +14,7 @@
 
 # Develop
 
+# Database
 ## Работа с fixtures
 ### Экспорт всех данных:
 ```bash
@@ -23,7 +24,7 @@ python manage.py dumpdata > fixtures/all_data.json --format=json
 ### Экспорт данных конкретной модели:
 
 ```bash
-python manage.py loaddata product_app.Product >fixtures/products-fixtures.json --format=json
+python manage.py dumpdata products.ProductCategory > fixtures/product-category-fixtures.json --format=json 
 ```
 
 ### Импорт всех данных:
@@ -31,6 +32,24 @@ python manage.py loaddata product_app.Product >fixtures/products-fixtures.json -
 ```bash
 python manage.py loaddata fixtures\all_data.json
 ```
+
+## Перенос данных из PostgreSQL
+### Экспорт и импорт дампа
+Используйте утилиту pg_dump для создания дампа базы данных:
+```bash
+pg_dump -U username -h hostname -p port dbname > backup.sql
+```
+
+### Экспорт и импорт дампа для **Windows**
+```bash
+& "C:\Program Files\PostgreSQL\15\bin\pg_dump.exe" '-U' 'postgres' '-h' 'localhost' '-p' '5432' 'store' > backup.sql
+```
+
+
+
+
+
+
 
 ## Линтеры и форматеры:
 ```bash
