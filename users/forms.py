@@ -2,6 +2,7 @@ import uuid
 from datetime import timedelta
 
 from django import forms
+from django.conf import settings
 from django.contrib.auth.forms import (
     AuthenticationForm,
     UserChangeForm,
@@ -11,6 +12,7 @@ from django.core.mail import send_mail
 from django.utils.timezone import now
 
 from users.models import User, EmailVerification
+from users.tasks import send_email_verification
 
 
 class UserLoginForm(AuthenticationForm):
@@ -80,20 +82,16 @@ class UserRegisterForm(UserCreationForm):
         fields = ("username", "email", "password1", "password2")
 
     # Подтверждение email через отсылку почты
-    # def save(self, commit=True) -> User:
-    #     user = super().save(commit=True)
-    #     expiration = now() + timedelta(hours=48)
-    #     record = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
-    #     record.send_verification_email()
-    #     return user
+    def save(self, commit=True) -> User:
+        user = super().save(commit=True)
 
-        # if settings.CELERY_SWITCH is True:
-        #     send_email_verification.delay(user.id)
-        # else:
-        #     expiration = now() + timedelta(hours=48)
-        #     record = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
-        #     record.send_verification_email()
-        # return user
+        if settings.CELERY_SWITCH is True:
+            send_email_verification.delay(user.id)
+        else:
+            expiration = now() + timedelta(hours=48)
+            record = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
+            record.send_verification_email()
+        return user
 
 
 class UserProfileForm(UserChangeForm):

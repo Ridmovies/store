@@ -6,13 +6,15 @@
 - Django ORM
 - Django templates
 - Bootstrap 
-- django-allauth[socialaccount]
+- django-allauth
+- Redis 
 
 
 ## Особенности проекта:
 - Модификация стандартной модели User
 - Подтверждение электронной почты
 - Логин с помощью OAuth 2.0 Github provider 
+- Кэширование с Redis
 
 
 # Develop
@@ -70,4 +72,29 @@ mypy --incremental ./product_app/views.py
 
 ```bash
 flake8 . 
+```
+
+## Команды для работы с Redis
+### Запустить Redis на локальной машине
+```bash
+sudo service redis-server start
+```
+
+### Проверка состояния через команду PING
+Команда PING отправляет запрос серверу Redis и ожидает ответа. Если сервер отвечает «PONG», значит он доступен и готов принимать команды.
+
+```bash
+redis-cli PING
+```
+
+## Команды для работы с Celery
+### Starting the worker process
+```bash
+celery -A store worker -l INFO
+```
+
+### Starting the Scheduler
+To start the celery beat service:
+```bash
+celery -A store beat -l INFO
 ```

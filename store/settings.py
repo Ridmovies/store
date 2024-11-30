@@ -202,3 +202,9 @@ CACHES = {
         "LOCATION": "redis://127.0.0.1:6379",
     }
 }
+
+# Celery settings
+CELERY_SWITCH = True
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+CELERY_BROKER_URL = f"redis://127.0.0.1:6379"
+CELERY_RESULT_BACKEND = f"redis://127.0.0.1:6379"

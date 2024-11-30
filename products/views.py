@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.cache import cache
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
@@ -20,7 +21,12 @@ class ProductsView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = ProductCategory.objects.all()
+        categories = cache.get("categories")
+        if categories is None:
+            context["categories"] = ProductCategory.objects.all()
+            cache.set("categories", context["categories"], 30)
+        else:
+            context["categories"] = categories
         context["title"] = "Products"
         return context
 
