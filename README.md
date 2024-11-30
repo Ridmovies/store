@@ -6,11 +6,13 @@
 - Django ORM
 - Django templates
 - Bootstrap 
+- django-allauth[socialaccount]
 
 
 ## Особенности проекта:
 - Модификация стандартной модели User
 - Подтверждение электронной почты
+- Логин с помощью OAuth 2.0 Github provider 
 
 
 # Develop
