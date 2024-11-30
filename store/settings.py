@@ -25,7 +25,6 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
-DOMAIN_NAME = os.environ.get("DOMAIN_NAME")
 
 
 # Application definition
@@ -204,7 +203,14 @@ CACHES = {
 }
 
 # Celery settings
-CELERY_SWITCH = True
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_BROKER_URL = f"redis://127.0.0.1:6379"
 CELERY_RESULT_BACKEND = f"redis://127.0.0.1:6379"
+
+# My settings:
+# Вкл/Выкл Celery
+CELERY_SWITCH = True
+# Отсылать письмо на email c проверочной ссылкой
+EMAIL_VERIFICATION = False
+# ссылка на корневую страницу
+DOMAIN_NAME = os.environ.get("DOMAIN_NAME")

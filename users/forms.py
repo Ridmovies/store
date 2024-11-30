@@ -85,12 +85,13 @@ class UserRegisterForm(UserCreationForm):
     def save(self, commit=True) -> User:
         user = super().save(commit=True)
 
-        if settings.CELERY_SWITCH is True:
-            send_email_verification.delay(user.id)
-        else:
-            expiration = now() + timedelta(hours=48)
-            record = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
-            record.send_verification_email()
+        if settings.EMAIL_VERIFICATION:
+            if settings.CELERY_SWITCH is True:
+                send_email_verification.delay(user.id)
+            else:
+                expiration = now() + timedelta(hours=48)
+                record = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
+                record.send_verification_email()
         return user
 
 
