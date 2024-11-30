@@ -19,6 +19,12 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
 DOMAIN_NAME = os.environ.get("DOMAIN_NAME")
 
 
@@ -37,12 +43,15 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
 
+    "debug_toolbar",
+
     "users.apps.UsersConfig",
     "products.apps.ProductsConfig",
     "orders.apps.OrdersConfig",
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -182,8 +191,14 @@ SOCIALACCOUNT_PROVIDERS = {
     'github': {
         'SCOPE': [
             'user',
-            # 'repo',
-            # 'read:org',
         ],
+    }
+}
+
+#Redis
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
     }
 }
