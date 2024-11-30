@@ -32,8 +32,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    'oauth2_provider',
-
     "users.apps.UsersConfig",
     "products.apps.ProductsConfig",
     "orders.apps.OrdersConfig",
