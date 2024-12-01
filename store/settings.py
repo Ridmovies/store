@@ -100,16 +100,30 @@ WSGI_APPLICATION = "store.wsgi.application"
 
 PG_SERVICE_FILE_PATH = os.path.join(BASE_DIR, '.pg_service.conf')
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        'NAME': os.environ.get("DATABASES_NAME"),
-        'USER': os.environ.get("DATABASES_USER"),
-        'PASSWORD': os.environ.get("DATABASES_PASSWORD"),
-        'HOST': os.environ.get("DATABASES_HOST"),
-        'PORT': os.environ.get("DATABASES_PORT"),
+
+
+if os.getenv("DOCKER_RUNTIME"):
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "HOST": os.environ.get("DOCKER_DB_HOST"),
+            "NAME": os.environ.get("DOCKER_DB_NAME"),
+            "USER": os.environ.get("DOCKER_DB_USER"),
+            "PASSWORD": os.environ.get("DOCKER_DB_PASS"),
+        }
     }
-}
+
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            'NAME': os.environ.get("DATABASES_NAME"),
+            'USER': os.environ.get("DATABASES_USER"),
+            'PASSWORD': os.environ.get("DATABASES_PASSWORD"),
+            'HOST': os.environ.get("DATABASES_HOST"),
+            'PORT': os.environ.get("DATABASES_PORT"),
+        }
+    }
 
 
 # Password validation
@@ -196,10 +210,11 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 #Redis
+REDIS_HOST = "redis" if os.environ.get("DOCKER_RUNTIME") else "127.0.0.1"
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
+        "LOCATION": f"redis://{REDIS_HOST}:6379",
     }
 }
 

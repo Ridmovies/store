@@ -1,0 +1,38 @@
+version: '3.9'
+services:
+  web:
+    build: .
+    command: >
+      sh -c "
+        python manage.py migrate &&
+        python manage.py runserver 0.0.0.0:5000 &&
+        celery -A python_django_diploma worker -l INFO
+      "
+    container_name: store
+    environment:
+      - DOCKER_RUNTIME=1
+    volumes:
+      - media:/code/src/static/images
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:15
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    expose:
+      - 5432
+
+  redis:
+    image: redis:alpine
+
+volumes:
+  pgdata:
+  media:

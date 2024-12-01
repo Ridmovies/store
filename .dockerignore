@@ -1,0 +1,8 @@
+.git
+.venv
+.idea
+.media
+
+.dockerignore
+.Dockerfile
+.flake8
