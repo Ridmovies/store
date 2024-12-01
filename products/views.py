@@ -42,7 +42,6 @@ class ProductsView(ListView):
         return queryset.order_by("id")
 
 
-@method_decorator(login_required, name="dispatch")
 def basket_add(request: HttpRequest, product_id: int) -> HttpResponse:
     product = Product.objects.get(id=product_id)
     baskets = Basket.objects.filter(user=request.user, product=product)
@@ -56,7 +55,6 @@ def basket_add(request: HttpRequest, product_id: int) -> HttpResponse:
     return redirect(request.META.get("HTTP_REFERER"))
 
 
-@method_decorator(login_required, name="dispatch")
 def basket_remove(request: HttpRequest, basket_id: int) -> HttpResponse:
     basket = Basket.objects.get(id=basket_id)
     basket.delete()
