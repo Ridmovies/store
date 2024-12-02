@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
@@ -79,3 +81,9 @@ class EmailVerificationView(TitleMixin, TemplateView):
 #         else:
 #             return HttpResponseRedirect(reverse_lazy('products:index'))
 #
+
+def get_oauth_redirect_url(request):
+    client_id = os.environ.get('YOOKASSA_CLIENT_ID')
+    state = 1234
+    url = f"https://yookassa.ru/oauth/v2/authorize?client_id={client_id}&response_type=code&state={state}"
+    return redirect(url)

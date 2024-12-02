@@ -17,25 +17,25 @@ def get_confirmation_url(order_id: int, value: str, description: str):
     idempotence_key = str(uuid.uuid4())
     payment = Payment.create({
         "amount": {
-          "value": value,
-          "currency": "RUB"
+            "value": value,
+            "currency": "RUB"
         },
         "payment_method_data": {
-          "type": "bank_card"
+            "type": "bank_card"
         },
         "confirmation": {
-          "type": "redirect",
-          "return_url": settings.DOMAIN_NAME
+            "type": "redirect",
+            "return_url": f'{settings.DOMAIN_NAME}',
         },
         "description": f"Заказ № {order_id}",
-        "metadata": {"orderId": order_id },
+        "metadata": {"orderId": order_id},
         "capture": True,
         "test": True,
     }, idempotence_key)
 
     # get confirmation url
     confirmation_url = payment.confirmation.confirmation_url
-    return confirmation_url
+    return confirmation_url, payment.id
 
 
 def get_payment_info(payment_id: str):

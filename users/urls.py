@@ -6,6 +6,7 @@ from users.views import (
     UserRegisterView,
     logout_view,
     EmailVerificationView,
+    get_oauth_redirect_url,
 )
 
 app_name = "users"
@@ -16,4 +17,5 @@ urlpatterns = [
     path("registration/", UserRegisterView.as_view(), name="registration"),
     path('verify/<str:email>/<uuid:code>/', EmailVerificationView.as_view(), name='email_verification'),
     path("<int:pk>/profile/", UserProfileView.as_view(), name="profile"),
+    path("oauth/", get_oauth_redirect_url, name="oauth"),
 ]

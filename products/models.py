@@ -9,7 +9,6 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2)
     quantity = models.PositiveIntegerField(default=0)
     image = models.ImageField(upload_to="products_images", null=True, blank=True)
-    stripe_product_price_id = models.CharField(max_length=128, null=True, blank=True)
     category = models.ForeignKey(to="ProductCategory", on_delete=models.CASCADE)
 
     def __str__(self):
@@ -38,3 +37,12 @@ class Basket(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.product.name} - {self.quantity}"
+
+    def de_json(self):
+        basket_item = {
+            'product_name': self.product.name,
+            'quantity': self.quantity,
+            'price': float(self.product.price),
+            'sum': float(self.sum()),
+        }
+        return basket_item
