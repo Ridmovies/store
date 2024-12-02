@@ -182,12 +182,14 @@ LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = '/admin/login/'
 
 # Email settings
-# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-EMAIL_HOST = os.environ.get("EMAIL_HOST")
-EMAIL_PORT = os.environ.get("EMAIL_PORT")
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
-EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL")
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+else:
+    EMAIL_HOST = os.environ.get("EMAIL_HOST")
+    EMAIL_PORT = os.environ.get("EMAIL_PORT")
+    EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+    EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL")
 
 #allauth
 AUTHENTICATION_BACKENDS = [
@@ -210,7 +212,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 #Redis
-REDIS_HOST = "redis" if os.environ.get("DOCKER_RUNTIME") else "127.0.0.1"
+REDIS_HOST = "redis" if os.environ.get("DOCKER_RUNTIME") else os.environ.get("REDIS_HOST")
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
@@ -220,8 +222,8 @@ CACHES = {
 
 # Celery settings
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
-CELERY_BROKER_URL = f"redis://127.0.0.1:6379"
-CELERY_RESULT_BACKEND = f"redis://127.0.0.1:6379"
+CELERY_BROKER_URL = f"redis://{REDIS_HOST}:6379"
+CELERY_RESULT_BACKEND = f"redis://{REDIS_HOST}:6379"
 
 # My settings:
 # Вкл/Выкл Celery
