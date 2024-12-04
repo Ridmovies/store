@@ -26,10 +26,81 @@ http://127.0.0.1:8000/orders/check_payment/2ede3d52-000f-5000-8000-1686255115b4/
 Запускает функцию проверки, обновления заказа и очистки корзины
 
 
+### Активируйте окружение, чтобы вы могли устанавливать в него пакеты:
+```bash
+source venv/bin/activate
+```
+
+### Установка пакетов из [requirements.txt]
+```bash
+pip install -r requirements.txt
+```
+
+### Создайте базу данных
+
+
+### Накатите миграции
+```bash
+python manage.py migrate
+```
+
+### Creating a superuser
+```bash
+python manage.py createsuperuser --username=root --email=root@example.com
+```
+
+### Запустить тестовый сервер:
+```bash
+python manage.py runserver 0.0.0.0:8000
+```
+
+### Start page application
+        http://127.0.0.1:8000/
+
+### Admin Panel
+        http://127.0.0.1:8000/admin
 
 # Develop
 
 # Database
+
+## Создание базы данных postgres
+PostgreSQL присутствует в официальных репозиториях Ubuntu, поэтому для установки достаточно выполнить:
+```bash
+sudo apt-get update
+sudo apt-get install postgresql postgresql-contrib
+```
+
+переключитесь на сессию данного пользователя:
+```bash
+sudo su - postgres
+```
+
+После чего запустите консоль Postgres:
+```bash
+psql
+```
+
+Чтобы создать новую роль выполните:
+```bash
+CREATE ROLE имя_роли WITH LOGIN CREATEDB CREATEROLE;
+```
+Далее задайте новому пользователю пароль:
+```bash
+\password имя_роли
+```
+
+Для создания базы из консоли Postgres, используйте:
+
+```bash
+CREATE DATABASE имя_базы;
+```
+
+Подключение к базе данных 
+```bash
+psql -U postgres -d store -h localhost -W
+```
+
 ## Работа с fixtures
 ### Экспорт всех данных:
 ```bash
