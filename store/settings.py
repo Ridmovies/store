@@ -92,6 +92,8 @@ WSGI_APPLICATION = "store.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# SQLite
+# Разкомментировать, если используется SQLite
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.sqlite3",
@@ -102,7 +104,8 @@ WSGI_APPLICATION = "store.wsgi.application"
 PG_SERVICE_FILE_PATH = os.path.join(BASE_DIR, '.pg_service.conf')
 
 
-
+# POSTGRESQL
+# Закомментировать, если используется SQLite
 if os.getenv("DOCKER_RUNTIME"):
     DATABASES = {
         "default": {

@@ -8,6 +8,7 @@
 - Bootstrap 
 - django-allauth
 - Redis 
+- Celery
 
 
 ## Особенности проекта:
@@ -19,6 +20,7 @@
 
 ## На доработку:
 - Работает только ручная проверка статуса заказа от YooKassa
+- Создать правильную структура проекта
 ### Пример ручной проверки заказа:
 http://127.0.0.1:8000/orders/check_payment/<payment_id>/
 payment_id: id платежа
@@ -26,44 +28,96 @@ http://127.0.0.1:8000/orders/check_payment/2ede3d52-000f-5000-8000-1686255115b4/
 Запускает функцию проверки, обновления заказа и очистки корзины
 
 
-### Активируйте окружение, чтобы вы могли устанавливать в него пакеты:
-```bash
-source venv/bin/activate
-```
+## Установка и запуск
+### Шаги установки
 
-### Установка пакетов из [requirements.txt]
-```bash
-pip install -r requirements.txt
-```
+1. Клонируйте репозиторий:
+    ```bash
+    git clone https://github.com/Ridmovies/store.git
+    ```
+2. Перейдите в директорию проекта:
+   ```bash
+   cd repository
+   ```
+    
+3. Активируйте виртуальное окружение:
+    ```bash
+    source venv/bin/activate
+    ```
+   
+4. Установите зависимости из [requirements.txt]:
+    ```bash
+    pip install -r requirements.txt
+    ```
+   
+5. Создайте файл .env в корневой директории проекта и добавьте туда необходимые переменные окружения. Для примера смотри файл [.env.example](.env.example)
+   ```bash
+   touch .env
+   echo "SECRET_KEY=your_secret_key_here" >> .env
+   ```
 
-### Создайте базу данных
+6. Создай Базу данных [postgres](#postgres) или используй [sqlite](#sqlite)
+7. Выполните миграцию базы данных:
+    ```bash
+    python manage.py migrate
+    ```
+8. Создание суперпользователя
+    ```bash
+    python manage.py createsuperuser
+    ```
+9. Запустите сервер разработки:
+    ```bash
+    python manage.py runserver 0.0.0.0:8000
+    ```
+
+## Установка с Docker
+### Требования
+
+- Docker
+- Docker Compose
+
+### Шаги установки
+
+1. Клонируйте репозиторий:
+    ```bash
+    git clone https://github.com/Ridmovies/store.git
+    ```
+2. Перейдите в директорию проекта:
+   ```bash
+   cd repository
+   ```
+
+3. Создайте файл .env в корневой директории проекта и добавьте туда необходимые переменные окружения. Для примера смотри файл [.env.example](.env.example)
+   ```bash
+   touch .env
+   echo "SECRET_KEY=your_secret_key_here" >> .env
+   ```
+
+4. Запустите контейнеры с помощью Docker Compose:
+    ```bash
+   docker-compose up -d
+   ```
+   
+Подробнее о работе с [Docker](#docker)
 
 
-### Накатите миграции
-```bash
-python manage.py migrate
-```
 
-### Creating a superuser
-```bash
-python manage.py createsuperuser --username=root --email=root@example.com
-```
-
-### Запустить тестовый сервер:
-```bash
-python manage.py runserver 0.0.0.0:8000
-```
-
-### Start page application
+### Стартовая страница приложения
         http://127.0.0.1:8000/
 
-### Admin Panel
+### Панель администратора
         http://127.0.0.1:8000/admin
+
+
 
 # Develop
 
 # Database
+<a id="sqlite"></a>
+## Создание базы данных SQLite
+В файле [settings.py](store/settings.py) раскомментируйте блок SQLite и закомментируйте Postgres
 
+<a id="postgres"></a>
 ## Создание базы данных postgres
 PostgreSQL присутствует в официальных репозиториях Ubuntu, поэтому для установки достаточно выполнить:
 ```bash
@@ -169,18 +223,18 @@ redis-cli PING
 ```
 
 ## Команды для работы с Celery
-### Starting the worker process
+### Запуск рабочего процесса
 ```bash
 celery -A store worker -l INFO
 ```
 
-### Starting the Scheduler
+### Запуск планировщика
 To start the celery beat service:
 ```bash
 celery -A store beat -l INFO
 ```
 
-
+<a id="docker"></a>
 ## Команды для работы с Docker 
 собрать образ Docker
 ```bash
