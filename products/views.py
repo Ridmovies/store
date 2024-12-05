@@ -59,4 +59,3 @@ def basket_remove(request: HttpRequest, basket_id: int) -> HttpResponse:
     basket = Basket.objects.get(id=basket_id)
     basket.delete()
     return redirect(request.META.get("HTTP_REFERER"))
-

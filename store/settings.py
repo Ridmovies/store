@@ -18,7 +18,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 INTERNAL_IPS = [
     # ...
@@ -36,16 +36,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'django.contrib.humanize',
-
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.github',
-    'django_extensions',
-
+    "django.contrib.humanize",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.github",
+    "django_extensions",
     "debug_toolbar",
-
     "users.apps.UsersConfig",
     "products.apps.ProductsConfig",
     "orders.apps.OrdersConfig",
@@ -59,10 +56,8 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-
     # Add the account middleware Allauth:
     "allauth.account.middleware.AccountMiddleware",
-
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -79,7 +74,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-
                 "products.context_processors.baskets",
             ],
         },
@@ -101,7 +95,7 @@ WSGI_APPLICATION = "store.wsgi.application"
 #     }
 # }
 
-PG_SERVICE_FILE_PATH = os.path.join(BASE_DIR, '.pg_service.conf')
+PG_SERVICE_FILE_PATH = os.path.join(BASE_DIR, ".pg_service.conf")
 
 
 # POSTGRESQL
@@ -121,11 +115,11 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            'NAME': os.environ.get("DATABASES_NAME"),
-            'USER': os.environ.get("DATABASES_USER"),
-            'PASSWORD': os.environ.get("DATABASES_PASSWORD"),
-            'HOST': os.environ.get("DATABASES_HOST"),
-            'PORT': os.environ.get("DATABASES_PORT"),
+            "NAME": os.environ.get("DATABASES_NAME"),
+            "USER": os.environ.get("DATABASES_USER"),
+            "PASSWORD": os.environ.get("DATABASES_PASSWORD"),
+            "HOST": os.environ.get("DATABASES_HOST"),
+            "PORT": os.environ.get("DATABASES_PORT"),
         }
     }
 
@@ -187,7 +181,7 @@ LOGIN_REDIRECT_URL = "/"
 
 #  OAuth settings
 # LOGIN_URL = "/users/login/"
-LOGIN_URL = '/admin/login/'
+LOGIN_URL = "/admin/login/"
 
 # Email settings
 if DEBUG:
@@ -199,28 +193,29 @@ else:
     EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
     EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL")
 
-#allauth
+# allauth
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
-
+    "django.contrib.auth.backends.ModelBackend",
     # `allauth` specific authentication methods, such as login by email
-    'allauth.account.auth_backends.AuthenticationBackend',
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
 SITE_ID = 1
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
-    'github': {
-        'SCOPE': [
-            'user',
+    "github": {
+        "SCOPE": [
+            "user",
         ],
     }
 }
 
-#Redis
-REDIS_HOST = "redis" if os.environ.get("DOCKER_RUNTIME") else os.environ.get("REDIS_HOST")
+# Redis
+REDIS_HOST = (
+    "redis" if os.environ.get("DOCKER_RUNTIME") else os.environ.get("REDIS_HOST")
+)
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",

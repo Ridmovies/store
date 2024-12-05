@@ -51,20 +51,24 @@ class UserProfileView(UpdateView):
         context["total_sum"] = get_total_sum(baskets)
         return context
 
+
 class EmailVerificationView(TitleMixin, TemplateView):
-    title = 'Store - Подтверждение по элетронной почте'
-    template_name = 'users/email_verification.html'
+    title = "Store - Подтверждение по элетронной почте"
+    template_name = "users/email_verification.html"
 
     def get(self, request, *args, **kwargs):
-        code = kwargs['code']
-        user = User.objects.get(email=kwargs['email'])
+        code = kwargs["code"]
+        user = User.objects.get(email=kwargs["email"])
         email_verifications = EmailVerification.objects.filter(user=user, code=code)
-        if email_verifications.exists() and not email_verifications.first().is_expired():
+        if (
+            email_verifications.exists()
+            and not email_verifications.first().is_expired()
+        ):
             user.is_verified_email = True
             user.save()
             return super().get(request, *args, **kwargs)
         else:
-            return HttpResponseRedirect(reverse_lazy('products:index'))
+            return HttpResponseRedirect(reverse_lazy("products:index"))
 
 
 # class EmailVerificationView(FormView):
@@ -82,8 +86,9 @@ class EmailVerificationView(TitleMixin, TemplateView):
 #             return HttpResponseRedirect(reverse_lazy('products:index'))
 #
 
+
 def get_oauth_redirect_url(request):
-    client_id = os.environ.get('YOOKASSA_CLIENT_ID')
+    client_id = os.environ.get("YOOKASSA_CLIENT_ID")
     state = 1234
     url = f"https://yookassa.ru/oauth/v2/authorize?client_id={client_id}&response_type=code&state={state}"
     return redirect(url)

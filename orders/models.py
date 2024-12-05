@@ -9,10 +9,10 @@ class Order(models.Model):
     ON_WAY = 2
     DELIVERED = 3
     STATUS = (
-        (CREATED, 'CREATED'),
-        (PAID, 'PAID'),
-        (ON_WAY, 'ON_WAY'),
-        (DELIVERED, 'DELIVERED'),
+        (CREATED, "CREATED"),
+        (PAID, "PAID"),
+        (ON_WAY, "ON_WAY"),
+        (DELIVERED, "DELIVERED"),
     )
 
     first_name = models.CharField(max_length=150, blank=True)
@@ -25,5 +25,4 @@ class Order(models.Model):
     initiator = models.ForeignKey(to=User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'Order #{self.pk} {self.first_name}'
-
+        return f"Order #{self.pk} {self.first_name}"

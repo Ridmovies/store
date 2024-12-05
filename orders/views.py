@@ -14,9 +14,9 @@ from products.services import get_total_sum
 class OrderCreateView(TitleMixin, CreateView):
     model = Order
     form_class = OrderForm
-    template_name = 'orders/order-create.html'
-    success_url = reverse_lazy('orders:order_payment')
-    title = 'Store: Create Order'
+    template_name = "orders/order-create.html"
+    success_url = reverse_lazy("orders:order_payment")
+    title = "Store: Create Order"
 
     def form_valid(self, form):
         form.instance.initiator = self.request.user
@@ -44,9 +44,9 @@ def check_payment(request, payment_id: str):
 
 class OrdersListView(ListView):
     model = Order
-    template_name = 'orders/orders.html'
+    template_name = "orders/orders.html"
 
 
 class OrderDetailView(DetailView):
     model = Order
-    template_name = 'orders/order.html'
+    template_name = "orders/order.html"

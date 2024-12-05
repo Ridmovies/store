@@ -18,18 +18,20 @@ class EmailVerification(models.Model):
     expiration = models.DateTimeField()
 
     class Meta:
-        verbose_name = 'подтверждение почты'
-        verbose_name_plural = 'подтверждение почты'
+        verbose_name = "подтверждение почты"
+        verbose_name_plural = "подтверждение почты"
 
     def __str__(self):
-        return f'Email verification for {self.user.email}'
-
+        return f"Email verification for {self.user.email}"
 
     def send_verification_email(self):
-        link = reverse('users:email_verification', kwargs={'email': self.user.email, 'code': self.code})
-        verification_link = f'{settings.DOMAIN_NAME}{link}'
-        subject = f'verify account for {self.user.username}'
-        message = f'verification link {verification_link}'
+        link = reverse(
+            "users:email_verification",
+            kwargs={"email": self.user.email, "code": self.code},
+        )
+        verification_link = f"{settings.DOMAIN_NAME}{link}"
+        subject = f"verify account for {self.user.username}"
+        message = f"verification link {verification_link}"
         send_mail(
             subject=subject,
             message=message,

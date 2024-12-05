@@ -90,7 +90,9 @@ class UserRegisterForm(UserCreationForm):
                 send_email_verification.delay(user.id)
             else:
                 expiration = now() + timedelta(hours=48)
-                record = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
+                record = EmailVerification.objects.create(
+                    code=uuid.uuid4(), user=user, expiration=expiration
+                )
                 record.send_verification_email()
         return user
 
